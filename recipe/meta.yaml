@@ -1,5 +1,5 @@
 {% set version = "1.1" %}
-{% set build = 2 %}
+{% set build = 3 %}
 {% set mpi = mpi or "nompi" %}
 
 package:
@@ -14,9 +14,6 @@ source:
   - url: https://github.com/wavefunction91/linalg-cmake-modules/archive/9d2c273a671d6811e9fd432f6a4fa3d915b144b8.tar.gz
     sha256: 6e49c6c7c7df14b956d1fee77d9b6aad9ded3210cd639133c69a52b2e5ce4eae
     folder: external/linalg-cmake-modules
-  - url: https://github.com/wavefunction91/IntegratorXX/archive/1369be58d7a3235dac36d75dd964fef058830622.tar.gz
-    sha256: a2b168ba8721cf4969f2324dd363a52698f3f2a3b71ef451e1d72cce367b002a
-    folder: external/integratorxx
 
 {% if mpi == "nompi" %}
 {% set build = build + 100 %}
@@ -29,6 +26,8 @@ build:
 
   run_exports:
     - {{ pin_subpackage("gauxc", max_pin='x.x') }} {{ mpi_prefix }}_*
+  ignore_run_exports:
+    - catch2
 
 requirements:
   build:
@@ -43,6 +42,7 @@ requirements:
     - gau2grid >=2.0.6,<3
     - hdf5 * {{ mpi_prefix }}_*
     - highfive >=2.4.1,<3
+    - integratorxx >=1.0,<2
     - libblas  # [linux]
     - libgomp  # [linux]
     - llvm-openmp  # [osx]
@@ -66,7 +66,6 @@ about:
     - LICENSE.txt  # BSD-3-Clause
     - NOTICE.md
     - external/linalg-cmake-modules/LICENSE.txt  # BSD-3-Clause
-    - external/integratorxx/LICENSE.txt  # BSD-3-Clause
 
 extra:
   recipe-maintainers:

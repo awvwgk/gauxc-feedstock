@@ -41,6 +41,7 @@ requirements:
     - cmake >3.20,<4
     - ninja
     - llvm-openmp  # [osx]
+    - pkg-config
   host:
     - cuda-version {{ cuda_compiler_version }}  # [cuda_compiler_version != "None"]
     - exchcxx >=1.0,<2 cpu_*  # [cuda_compiler_version == "None"]
@@ -52,6 +53,8 @@ requirements:
     - libblas  # [linux]
     - libgomp  # [linux]
     - llvm-openmp  # [osx]
+    - magma          # [cuda_compiler_version != "None"]
+    - libcublas-dev  # [cuda_compiler_version != "None"]
     - {{ mpi }}  # [mpi != "nompi"]
   run:
     - llvm-openmp  # [osx]
